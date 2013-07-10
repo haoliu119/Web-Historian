@@ -1,1 +1,4 @@
 www.google.com
+www.amazon.com
+www.bing.com
+www.piratebay.se
