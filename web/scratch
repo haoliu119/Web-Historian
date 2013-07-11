@@ -1,0 +1,5 @@
+var originalHtml; 
+fs.read('./public/index.html', function(err, data){
+  if (err) throw err;
+  originalHtml = data;
+});

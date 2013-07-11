@@ -1,4 +1,4 @@
-exports.datadir = __dirname + "/testdata/sites.txt"; // tests will need to override this.
+exports.datadir = '/Users/hackreactor/code/krgeppert/2013-06-web-historian/data/sites.txt'; // tests will need to override this.
 var url = require('url');
 var fs = require('node-fs');
 var _ = require('underscore');
@@ -15,12 +15,20 @@ exports.handleRequest = function (req, res) {
       }
       break;
     case 'POST':
-      req.on('data', function(data){
-        var betterData = data.replace('url=', '');
-        if (!fileContainsUrl(betterData)) {
-          betterData += '\n';
-          fs.appendFileSync(exports.datadir, betterData, 'utf8');
-          endRequest(302, betterData);
+      var data = '';
+      req.on('data', function(chunk){
+        if (chunk !== undefined){
+        data += chunk;
+      }
+      });
+      req.on('end', function(){
+        console.log(data);
+        var url = data.replace('url=', '');
+        console.log(url);
+        if (!fileContainsUrl(url)) {
+          url += '\n';
+          fs.appendFileSync(exports.datadir, url, 'utf8');
+          endRequest(302, url);
         } else {
           endRequest(200);
         }
