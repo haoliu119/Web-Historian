@@ -10,14 +10,10 @@ describe("html fetcher helpers", function(){
 
     var filePath = path.join(__dirname, "/testdata/sites.txt");
 
-    fs.writeFileSync(filePath, urlArray.join("\n"));
 
-    var resultArray;
-
-    runs(function(){
-      htmlFetcherHelpers.readUrls(filePath, function(urls){
-        resultArray = urls;
-      });
+    var resultArray = [];
+    var result = htmlFetcherHelpers.readUrls(__dirname + "/testdata/sites.txt", function(urls){
+      resultArray.push(urls);
     });
 
     waits(200);
@@ -27,8 +23,8 @@ describe("html fetcher helpers", function(){
     });
   });
 
-  xit("should have a 'downloadUrls' function", function(){
-    var result = htmlFetcherHelpers.downloadUrls();
+  it("should have a working 'downloadUrls' function", function(){
+    var result = htmlFetcherHelpers.downloadUrls(['www.google.com', 'www.amazon.com']);
     expect(result).toBeTruthy();
   });
 });

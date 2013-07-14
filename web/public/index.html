@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>  
   <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
   <form method="POST">
-    <input type="input" name="url"></input>
+    <input id='foo' name="url">
+    <button>Go!</button>
   </form>
+  <script>
+    $('form').on('submit', function(e){
+      e.preventDefault();
+      doThis($('#foo').val());
+    });
+
+    var doThis = function(thing){
+      $.ajax({
+        dataType: 'text',
+        url: 'http://127.0.0.1:8080/',
+        type: "POST",
+        data: {url: thing},
+        success: function(){console.log('posted');},
+        error: function(){console.log('bad post');}
+      });
+    };
+  </script>
 </body>
 </html>
